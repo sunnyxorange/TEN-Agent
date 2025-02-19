@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   ten_agent_dev:
     image: ghcr.io/ten-framework/ten_agent_build:0.4.10
@@ -17,6 +19,11 @@ services:
       - .env
     networks:
       - ten_agent_network
+    environment:
+      - HTTPS=true
+      - SSL_CRT_FILE=/app/ssl/cert.pem
+      - SSL_KEY_FILE=/app/ssl/key.pem
+    command: /bin/bash
   ten_agent_playground:
     image: ghcr.io/ten-framework/ten_agent_playground:0.8.0-57-g7011424
     container_name: ten_agent_playground
@@ -26,6 +33,9 @@ services:
     networks:
       - ten_agent_network
     environment:
+      - HTTPS=true
+      - SSL_CRT_FILE=/app/ssl/cert.pem
+      - SSL_KEY_FILE=/app/ssl/key.pem
       - AGENT_SERVER_URL=http://ten_agent_dev:8080
       - TEN_DEV_SERVER_URL=http://ten_agent_dev:49483
   ten_agent_demo:
@@ -37,6 +47,9 @@ services:
     networks:
       - ten_agent_network
     environment:
+      - HTTPS=true
+      - SSL_CRT_FILE=/app/ssl/cert.pem
+      - SSL_KEY_FILE=/app/ssl/key.pem
       - AGENT_SERVER_URL=http://ten_agent_dev:8080
   # ten_graph_designer:
   #   image: ghcr.io/ten-framework/ten_graph_designer:4cc33b8
